@@ -1,0 +1,42 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: example-local-claim
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+  storageClassName: mypvsc
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-go
+spec:
+  selector:
+    matchLabels:
+      app: hello-go
+  template:
+    metadata:
+      labels:
+        app: hello-go
+    spec:
+      containers:
+      - name: hello-go
+        image: hello-world:go
+        imagePullPolicy: Always
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 6060
+        volumeMounts: 
+        - name: localvolume
+          mountPath: /var/www/html
+      volumes:
+      - name: localvolume
+        persistentVolumeClaim:
+          claimName: example-local-claim
