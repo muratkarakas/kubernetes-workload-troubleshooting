@@ -1,0 +1,1 @@
+kubectl create secret docker-registry regcred  --docker-username=mkarakas --docker-password=****** --docker-email=karakasmurat@gmail.com

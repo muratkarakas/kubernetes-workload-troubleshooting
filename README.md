@@ -24,16 +24,16 @@
 
 * kubectl run -it  busybox --image=yauritux/busybox-curl --rm  --restart=Never -- sh
 
-
 ## Pod failures
 
 * CrashLoopBackOff => your application is trouble
 
 * ImagePullBackOff
 
+* ErrImagePull
+
 * Pod status Ready Status 0/x
 
-* Workload status 0/x
+* Pending
 
 * Pos restart count > 0
-
