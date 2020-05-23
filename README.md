@@ -1,39 +1,79 @@
-# kubernetes-workload-troubleshooting
+%title: Kubernetes Workload Troubleshooting
+%author: Murat Karakaş
+%date: 05-05-2020
 
-* Fundemantal commands
+-> # Road Map  <-
 
-* Pod failures
+* Fundemantal Commands
+
+* Pod Failures
+
+* Pod With Volumes
+
+* Selective Pod Placement
 
 * I can't access to my pod
 
-* Pod with volumes
+* Being Proactive
 
-* Selective pod placement
+---
 
-* Being proactive
+-> # Fundemantal Commands <-
 
-## Fundemantal commands
+* "kubectl get po" => check pod status
 
-* kubectl get po => check pod status
+* "kubectl logs -f" => pod logs
 
-* kubectl logs => pod logs
+* "kubectl describe po/deploy/" => show details
 
-* kubectl describe po/deploy/x => show details
+* "kubectl exec -it pod-id" sh/bash
 
-* kubectl exec -it "pod-id" sh/bash
+* "kubectl run -it  busybox --image=yauritux/busybox-curl --rm  --restart=Never -- sh" => Best friend
 
-* kubectl run -it  busybox --image=yauritux/busybox-curl --rm  --restart=Never -- sh
+* "kubectl get x --show-labels" => selectors
 
-## Pod failures
+---
 
-* CrashLoopBackOff => your application is trouble
+-> # Pod failures <-
 
-* ImagePullBackOff
+* Pod Status : CrashLoopBackOff
 
-* ErrImagePull
+* Pod Status : ErrImagePull
 
-* Pod status Ready Status 0/x
+* Pod Status : ImagePullBackOff
 
-* Pending
+* Pod Ready  0/1
 
-* Pos restart count > 0
+* Pod Restart count > 0
+
+* Pod Status: Pending
+
+---
+
+-> # Pod With Volumes <-
+
+Basic Scenario
+
++-----------+            +-----------+                             +-----------+
+|           |   defines  |           |  storaClass                 |           |
+|    Pod    |----------->|    PVC    |-------------> matches ----> |    PV     |
+|           |            |           |  capacity                   |           |
++-----------+            +-----------+                             +-----------+
+
+---
+
+-> # Being Proactive <-
+
+* Monitor Infrastructure & k8s components
+
+* Define alerts based on metrics
+
+* Always define resource requets and limits(must) for applications
+
+* Use liveness,readiness and startup probes
+
+* Centralized Logs
+
+* Set limits (defaults & namespace wide)
+
+* Dev/Prod parity
