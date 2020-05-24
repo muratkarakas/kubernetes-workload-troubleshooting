@@ -52,13 +52,84 @@
 
 -> # Pod With Volumes <-
 
-Basic Scenario
+Common Scenario
+
+* Pod defines storage requirements with PersistentVolumeClaim
+
+* Claim auto creates or bounds to existing volume
+
+* Pod starts
+
+```java
 
 +-----------+            +-----------+                             +-----------+
 |           |   defines  |           |  storaClass                 |           |
 |    Pod    |----------->|    PVC    |-------------> matches ----> |    PV     |
 |           |            |           |  capacity                   |           |
 +-----------+            +-----------+                             +-----------+
+
+```
+
+If pvc does not matchs/creates volume , pod will be in pending state
+
+---
+
+-> # Selective Pod Placement <-
+
+Kubernetes provides several mechanisms for custom pod placement and scheduling
+
+Some of them are basic, some of the gives more advenced controls
+
+* Node Selector
+
+* Affinity & AntiAffinity
+
+* Taint & Toleration
+
+If pod placement  or scheduling rule does not match ,pod will be  in pending state
+
+---
+
+-> # I can't access to my pod <-
+
+If pod will be accessed from another pod or external application/user, typical solution is
+defining  "Service" and Ingress(Extenal loadbalancer solution,better alternative to NodePort)
+
+```java
+
++-----------+                +------------+                     +-----------+
+|           | network call   |   k8s-dns  |      resolve        |           |
+|    Pod    |--------------->|     +      |-------------------> |    Pod    |
+|           |                | kube-proxy |    load balance     |           |
++-----------+                +------------+                     +-----------+
+                                            +                  +
+                        Updates/Triggers     +                +    Selectors
+                                              +--------------+
+                                                      |
+                                                      |
+                                                      |
+                                                      |
+                                                +-----------+
+                                                |           |
+                                                |  Service  |
+                                                |           |
+                                                +-----------+
+
+```
+
+---
+
+-> # I can't access to my pod <-
+
+Common issues:
+
+* Wrong service name or servive in another namespace
+
+* Pod selector does not match pod labels
+
+* Pods are not in ready state (Readiness probe!)
+
+* Service definition has in valid target port
 
 ---
 
