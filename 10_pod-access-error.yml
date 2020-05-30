@@ -14,7 +14,6 @@ spec:
       containers:
       - name: hello-go
         image: mkarakas/hello-world:go
-        imagePullPolicy: Always
         resources:
           limits:
             memory: "128Mi"
