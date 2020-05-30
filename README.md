@@ -63,14 +63,14 @@ Common Scenario
 ```java
 
 +-----------+            +-----------+                             +-----------+
-|           |   defines  |           |  storaClass                 |           |
+|           |   defines  |           |  storageClass               |           |
 |    Pod    |----------->|    PVC    |-------------> matches ----> |    PV     |
 |           |            |           |  capacity                   |           |
 +-----------+            +-----------+                             +-----------+
 
 ```
 
-If pvc does not matchs/creates volume , pod will be in pending state
+If pvc does not matches/creates volume , pod will stucked  in pending state
 
 ---
 
@@ -78,7 +78,7 @@ If pvc does not matchs/creates volume , pod will be in pending state
 
 Kubernetes provides several mechanisms for custom pod placement and scheduling
 
-Some of them are basic, some of the gives more advenced controls
+Some of them are basic, some of them gives more advenced controls
 
 * Node Selector
 
@@ -86,14 +86,14 @@ Some of them are basic, some of the gives more advenced controls
 
 * Taint & Toleration
 
-If pod placement  or scheduling rule does not match ,pod will be  in pending state
+If pod placement  or scheduling rule does not match , it will stucked  in pending state
 
 ---
 
 -> # I can't access to my pod <-
 
-If pod will be accessed from another pod or external application/user, typical solution is
-defining  "Service" and Ingress(Extenal loadbalancer solution,better alternative to NodePort)
+If pod need to be accessed from another pod or external application/user, typical solution is
+defining  "Service" and optionaly "Ingress"(Extenal loadbalancer solution,better alternative to NodePort)
 
 ```java
 
